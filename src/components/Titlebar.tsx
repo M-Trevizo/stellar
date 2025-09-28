@@ -16,6 +16,11 @@ export default function Titlebar() {
         }
     }
 
+    const closeMenus = () => {
+        setShowFile(false);
+        setShowEdit(false);
+    }
+
     const handleClick = (menu: "file" | "edit") => {
         switch(menu) {
             case "file": 
@@ -36,21 +41,21 @@ export default function Titlebar() {
             <div className="flex justify-center items-center gap-0 text-white">
                 <div className="h-full relative">
                     <button 
-                        className="px-2 h-full hover:cursor-pointer hover:bg-gray-700"
+                        className="px-4 h-full hover:cursor-pointer hover:bg-gray-700"
                         onClick={() => handleClick("file")}
                     >
                         File
                     </button>
-                    {showFile && <TitleMenu menu="file"/>}
+                    {showFile && <TitleMenu menu="file" closeMenus={closeMenus}/>}
                 </div>
                 <div className="h-full relative">
                     <button 
-                        className="px-2 h-full hover:cursor-pointer hover:bg-gray-700"
+                        className="px-4 h-full hover:cursor-pointer hover:bg-gray-700"
                         onClick={() => handleClick("edit")}
                     >
                         Edit
                     </button>
-                    {showEdit && <TitleMenu menu="edit"/>}
+                    {showEdit && <TitleMenu menu="edit" closeMenus={closeMenus}/>}
                 </div>
             </div>
             <div className="w-full" onMouseDown={handleDrag}></div>
