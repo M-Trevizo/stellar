@@ -1,10 +1,15 @@
+import TextBox from "./components/TextBox";
+import Titlebar from "./components/Titlebar";
+
 function App() {
 
   return (
-    <main className="bg-gray-700 flex flex-col text-center justify-center  min-h-screen">
-      <h1 className="font-bold text-white">Stellar</h1>
-      <p className="font-bold text-white">Hello World!</p>
-    </main>
+    <>
+      <main className="bg-gray-800 flex flex-col">
+        <Titlebar />
+        <TextBox />
+      </main>
+    </>
   );
 }
 
