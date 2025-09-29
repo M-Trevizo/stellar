@@ -1,7 +1,9 @@
-import { useState } from "react";
+type TextBoxProps = {
+    setContent: (nextState:string) => void;
+}
 
-export default function TextBox() {
-    const [content, setContent] = useState("");
+export default function TextBox(props: TextBoxProps) {
+    const { setContent } = props;
 
     return (
         <textarea 
