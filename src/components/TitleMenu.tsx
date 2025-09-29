@@ -1,10 +1,11 @@
 type TitleMenuProps = {
     menu: "file" | "edit",
-    closeMenus: () => void
+    closeMenus: () => void,
+    saveAs: () => void
 }
 
 export default function TitleMenu(props: TitleMenuProps) {
-    const { menu, closeMenus } = props;
+    const { menu, closeMenus, saveAs } = props;
     const fileMenuArr: string[] = [
         "New",
         "Open",
@@ -18,9 +19,15 @@ export default function TitleMenu(props: TitleMenuProps) {
         "Delete"
     ]
 
-    // TODO: Implement the option functionality
+    // TODO: This will handle all calls for option functionality
     const handleClick = (menu: "file" | "edit", option: number) => {
-        if (menu === "file") console.log(`Option selected: ${menu}: ${fileMenuArr[option]}`);
+        if (menu === "file") {
+            console.log(`Option selected: ${menu}: ${fileMenuArr[option]}`)
+            switch(fileMenuArr[option]) {
+                case "Save As...": saveAs();
+                break;
+            }
+        };
         if (menu === "edit") console.log(`Option selected: ${menu}: ${editMenuArr[option]}`);
     }
 
