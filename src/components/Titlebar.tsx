@@ -3,7 +3,12 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MouseEvent, useState } from "react";
 import TitleMenu from "./TitleMenu";
 
-export default function Titlebar() {
+type TitlebarProps = {
+    saveAs: () => void
+}
+
+export default function Titlebar(props: TitlebarProps) {
+    const { saveAs } =  props;
     const appWindow = getCurrentWindow();
     const [showFile, setShowFile] = useState<boolean>(false);
     const [showEdit, setShowEdit] = useState<boolean>(false);
@@ -46,7 +51,7 @@ export default function Titlebar() {
                     >
                         File
                     </button>
-                    {showFile && <TitleMenu menu="file" closeMenus={closeMenus}/>}
+                    {showFile && <TitleMenu menu="file" closeMenus={closeMenus} saveAs={saveAs}/>}
                 </div>
                 <div className="h-full relative">
                     <button 
@@ -55,7 +60,7 @@ export default function Titlebar() {
                     >
                         Edit
                     </button>
-                    {showEdit && <TitleMenu menu="edit" closeMenus={closeMenus}/>}
+                    {showEdit && <TitleMenu menu="edit" closeMenus={closeMenus} saveAs={saveAs}/>}
                 </div>
             </div>
             <div className="w-full" onMouseDown={handleDrag}></div>
