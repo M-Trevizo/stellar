@@ -1,7 +1,4 @@
-# Tauri + React + Typescript
+# Stellar
+Stellar is designed to be a simple notes taking desktop application similar is functionality to Notepad.
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+Stellar was created using [Tauri](https://tauri.app/), a framework for building cross platform binaries.
