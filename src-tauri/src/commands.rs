@@ -28,15 +28,22 @@ pub fn save_as(content: String) {
     };
 }
 
-#[tauri::command]
-pub fn save(content: String) {
+// #[tauri::command]
+// pub fn save(content: String) {
 
-}
+// }
 
 #[tauri::command]
-pub fn open(path: String) -> Result<String, String> {
+pub fn open() -> Result<String, String> {
+    // Open File Explorer and get file path
+    let path_buf = FileDialog::new()
+        .add_filter("text", &["txt"])
+        .set_directory("/")
+        .pick_file()
+        .ok_or("File not found")?;
+
     // Open file and create buffered reader
-    let file = File::open(path).map_err(|err| err.to_string())?;
+    let file = File::open(path_buf).map_err(|err| err.to_string())?;
     let mut buf_reader = BufReader::new(file);
     // Create new string and read into it
     let mut content = String::new();
