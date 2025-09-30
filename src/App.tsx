@@ -10,11 +10,20 @@ function App() {
     invoke("save_as", {content: content})
   }
 
+  const open = () => {
+    invoke("open")
+      .then((text) => {
+        setContent(text as string);
+        console.log(text);
+      })
+      .catch((error) => console.error(error))
+  }
+
   return (
     <>
       <main className="bg-gray-800 flex flex-col">
-        <Titlebar saveAs={saveAs}/>
-        <TextBox setContent={setContent}/>
+        <Titlebar open={open} saveAs={saveAs}/>
+        <TextBox content={content} setContent={setContent}/>
       </main>
     </>
   );
