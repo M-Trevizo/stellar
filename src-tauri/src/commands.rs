@@ -4,7 +4,9 @@ use std::io::Read;
 use std::io::Write;
 use std::io::BufWriter;
 use std::io::BufReader;
+use std::sync::Mutex;
 use rfd::FileDialog;
+use crate::AppState;
 
 // TODO: Create custom errors to handle the IO Errors
 
@@ -34,14 +36,21 @@ pub fn save_as(content: String) {
 // }
 
 #[tauri::command]
-pub fn open() -> Result<String, String> {
+pub fn open(state: tauri::State<'_, Mutex<AppState>>) -> Result<String, String> {
     // Open File Explorer and get file path
     let path_buf = FileDialog::new()
         .add_filter("text", &["txt"])
         .set_directory("/")
         .pick_file()
         .ok_or("File not found")?;
-
+    // Set the states file_path and file_name fields
+    let mut state = state.lock().unwrap();
+    state.file_path = path_buf.to_owned();
+    state.file_name = path_buf
+        .file_name()
+        .and_then(|os_str| os_str.to_str())
+        .unwrap_or_else(|| "")
+        .to_owned();
     // Open file and create buffered reader
     let file = File::open(path_buf).map_err(|err| err.to_string())?;
     let mut buf_reader = BufReader::new(file);
