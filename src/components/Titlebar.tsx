@@ -1,14 +1,21 @@
 // Template from Tauri.app
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MouseEvent, useState } from "react";
-import TitleMenu from "./TitleMenu";
+import FileMenu from "./FileMenu";
+import EditMenu from "./EditMenu";
+
+// Props for the title bar menus
+export type TitleMenuProps = {
+    closeMenus: () => void;
+}
 
 type TitlebarProps = {
+    open: () => void,
     saveAs: () => void
 }
 
 export default function Titlebar(props: TitlebarProps) {
-    const { saveAs } =  props;
+    const { open, saveAs } =  props;
     const appWindow = getCurrentWindow();
     const [showFile, setShowFile] = useState<boolean>(false);
     const [showEdit, setShowEdit] = useState<boolean>(false);
@@ -51,7 +58,14 @@ export default function Titlebar(props: TitlebarProps) {
                     >
                         File
                     </button>
-                    {showFile && <TitleMenu menu="file" closeMenus={closeMenus} saveAs={saveAs}/>}
+                    {
+                        showFile && 
+                        <FileMenu 
+                            closeMenus={closeMenus} 
+                            open={open}
+                            saveAs={saveAs}
+                        />
+                    }
                 </div>
                 <div className="h-full relative">
                     <button 
@@ -60,7 +74,13 @@ export default function Titlebar(props: TitlebarProps) {
                     >
                         Edit
                     </button>
-                    {showEdit && <TitleMenu menu="edit" closeMenus={closeMenus} saveAs={saveAs}/>}
+                    {
+                        showEdit && 
+                        <EditMenu 
+                            closeMenus={closeMenus} 
+                            cut={() => console.log("This should cut things")}
+                        />
+                    }
                 </div>
             </div>
             <div className="w-full" onMouseDown={handleDrag}></div>
