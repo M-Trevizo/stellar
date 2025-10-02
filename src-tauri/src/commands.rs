@@ -31,12 +31,12 @@ pub fn save_as(content: String) {
 }
 
 #[tauri::command]
-pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> std::io::Result<()> {
+pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), String> {
     let state = state.lock().unwrap();
     let path_buf = state.file_path.to_owned();
-    let file = File::open(path_buf)?;
+    let file = File::open(path_buf).map_err(|err| err.to_string())?;
     let mut buf_writer = BufWriter::new(file);
-    buf_writer.write(content.as_bytes())?;
+    buf_writer.write(content.as_bytes()).map_err(|err| err.to_string())?;
     Ok(())
 }
 
