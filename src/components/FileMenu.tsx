@@ -1,8 +1,9 @@
 import type { TitleMenuProps } from "./Titlebar";
 
 type FileMenuProps = TitleMenuProps & {
-    saveAs: () => void,
     open: () => void,
+    saveAs: () => void,
+    save: () => void
 }
 
 export default function FileMenu(props: FileMenuProps) {
@@ -22,6 +23,7 @@ export default function FileMenu(props: FileMenuProps) {
             break;
             case "Save As...": saveAs();
             break;
+            case "Save": saveAs();
         }   
     }
     

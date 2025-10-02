@@ -11,11 +11,12 @@ export type TitleMenuProps = {
 
 type TitlebarProps = {
     open: () => void,
-    saveAs: () => void
+    saveAs: () => void,
+    save: () => void
 }
 
 export default function Titlebar(props: TitlebarProps) {
-    const { open, saveAs } =  props;
+    const { open, saveAs, save } =  props;
     const appWindow = getCurrentWindow();
     const [showFile, setShowFile] = useState<boolean>(false);
     const [showEdit, setShowEdit] = useState<boolean>(false);
@@ -64,6 +65,7 @@ export default function Titlebar(props: TitlebarProps) {
                             closeMenus={closeMenus} 
                             open={open}
                             saveAs={saveAs}
+                            save={save}
                         />
                     }
                 </div>
