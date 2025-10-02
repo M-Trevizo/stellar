@@ -6,9 +6,26 @@ use std::io::BufWriter;
 use std::io::BufReader;
 use std::sync::Mutex;
 use rfd::FileDialog;
+use thiserror::Error;
 use crate::AppState;
 
 // TODO: Create custom errors to handle the IO Errors
+#[derive(Debug, Error)]
+pub enum Error {
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+    #[error("File not found")]
+    NotFound,
+}
+
+impl serde::Serialize for Error {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::ser::Serializer,
+    {
+        serializer.serialize_str(self.to_string().as_ref())
+    }
+}
 
 fn set_state(state: tauri::State<Mutex<AppState>>, path: &std::path::PathBuf) {
     let mut state = state.lock().unwrap();
@@ -43,31 +60,31 @@ pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) {
 }
 
 #[tauri::command]
-pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), String> {
+pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), Error> {
     let state = state.lock().unwrap();
     let path_buf = state.file_path.to_owned();
-    let file = File::open(path_buf).map_err(|err| err.to_string())?;
+    let file = File::open(path_buf)?;
     let mut buf_writer = BufWriter::new(file);
-    buf_writer.write(content.as_bytes()).map_err(|err| err.to_string())?;
+    buf_writer.write(content.as_bytes())?;
     Ok(())
 }
 
 #[tauri::command]
-pub fn open(state: tauri::State<'_, Mutex<AppState>>) -> Result<String, String> {
+pub fn open(state: tauri::State<'_, Mutex<AppState>>) -> Result<String, Error> {
     // Open File Explorer and get file path
     let path_buf = FileDialog::new()
         .add_filter("text", &["txt"])
         .set_directory("/")
         .pick_file()
-        .ok_or("File not found")?;
+        .ok_or(Error::NotFound)?;
     // Set the states file_path and file_name fields
     set_state(state, &path_buf);
     // Open file and create buffered reader
-    let file = File::open(path_buf).map_err(|err| err.to_string())?;
+    let file = File::open(path_buf)?;
     let mut buf_reader = BufReader::new(file);
     // Create new string and read into it
     let mut content = String::new();
-    buf_reader.read_to_string(&mut content).map_err(|err| err.to_string())?;
+    buf_reader.read_to_string(&mut content)?;
     // Return content string
     Ok(content)
 }
