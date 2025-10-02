@@ -19,10 +19,19 @@ function App() {
       .catch((error) => console.error(error))
   }
 
+  const save = async () => {
+    try {
+      await invoke("save", {content: content});
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <>
       <main className="bg-gray-800 flex flex-col">
-        <Titlebar open={open} saveAs={saveAs}/>
+        <Titlebar open={open} save={save} saveAs={saveAs}/>
         <TextBox content={content} setContent={setContent}/>
       </main>
     </>
