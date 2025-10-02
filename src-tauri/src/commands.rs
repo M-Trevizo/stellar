@@ -30,10 +30,15 @@ pub fn save_as(content: String) {
     };
 }
 
-// #[tauri::command]
-// pub fn save(content: String) {
-
-// }
+#[tauri::command]
+pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> std::io::Result<()> {
+    let state = state.lock().unwrap();
+    let path_buf = state.file_path.to_owned();
+    let file = File::open(path_buf)?;
+    let mut buf_writer = BufWriter::new(file);
+    buf_writer.write(content.as_bytes())?;
+    Ok(())
+}
 
 #[tauri::command]
 pub fn open(state: tauri::State<'_, Mutex<AppState>>) -> Result<String, String> {
