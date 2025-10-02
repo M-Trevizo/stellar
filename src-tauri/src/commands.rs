@@ -10,8 +10,18 @@ use crate::AppState;
 
 // TODO: Create custom errors to handle the IO Errors
 
+fn set_state(state: tauri::State<Mutex<AppState>>, path: &std::path::PathBuf) {
+    let mut state = state.lock().unwrap();
+    state.file_path = path.to_owned();
+    state.file_name = path
+        .file_name()
+        .and_then(|os_str| os_str.to_str())
+        .unwrap_or_else(|| "")
+        .to_owned();
+}
+
 #[tauri::command]
-pub fn save_as(content: String) {
+pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) {
     // Open File Explorer and get PathBuf
     let path_buf = FileDialog::new().save_file();
     // Check that path_buf is some value otherwise return
@@ -21,13 +31,15 @@ pub fn save_as(content: String) {
     // Then write to file and handle errors
     let mut path = path_buf.unwrap();
     path.set_extension("txt");
-    match File::create_new(path) {
+    match File::create_new(&path) {
         Ok(file) => { 
             let mut buf_writer = BufWriter::new(file);
             buf_writer.write(content.as_bytes()).unwrap();
         }
         Err(error) => println!("Error: {}", error),
     };
+    // Add file path and name to app State
+    set_state(state, &path);
 }
 
 #[tauri::command]
@@ -49,13 +61,7 @@ pub fn open(state: tauri::State<'_, Mutex<AppState>>) -> Result<String, String> 
         .pick_file()
         .ok_or("File not found")?;
     // Set the states file_path and file_name fields
-    let mut state = state.lock().unwrap();
-    state.file_path = path_buf.to_owned();
-    state.file_name = path_buf
-        .file_name()
-        .and_then(|os_str| os_str.to_str())
-        .unwrap_or_else(|| "")
-        .to_owned();
+    set_state(state, &path_buf);
     // Open file and create buffered reader
     let file = File::open(path_buf).map_err(|err| err.to_string())?;
     let mut buf_reader = BufReader::new(file);
