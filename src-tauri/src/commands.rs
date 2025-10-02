@@ -16,6 +16,8 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error("File not found")]
     NotFound,
+    #[error("Could not save file")]
+    SaveFail,
 }
 
 impl serde::Serialize for Error {
@@ -38,25 +40,19 @@ fn set_state(state: tauri::State<Mutex<AppState>>, path: &std::path::PathBuf) {
 }
 
 #[tauri::command]
-pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) {
+pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), Error> {
     // Open File Explorer and get PathBuf
-    let path_buf = FileDialog::new().save_file();
-    // Check that path_buf is some value otherwise return
-    if path_buf.is_none() { return };
-    
-    // Unwrap Option and create a new file
-    // Then write to file and handle errors
-    let mut path = path_buf.unwrap();
-    path.set_extension("txt");
-    match File::create_new(&path) {
-        Ok(file) => { 
-            let mut buf_writer = BufWriter::new(file);
-            buf_writer.write(content.as_bytes()).unwrap();
-        }
-        Err(error) => println!("Error: {}", error),
-    };
+    let mut path_buf = FileDialog::new()
+        .save_file()
+        .ok_or(Error::SaveFail)?;
+    path_buf.set_extension("txt");
+    // Create new file and write to it
+    let file = File::create_new(&path_buf)?;
+    let mut buf_writer = BufWriter::new(file);
+    buf_writer.write(content.as_bytes())?;
     // Add file path and name to app State
-    set_state(state, &path);
+    set_state(state, &path_buf);
+    Ok(())
 }
 
 #[tauri::command]
