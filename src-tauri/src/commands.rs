@@ -90,3 +90,11 @@ pub fn open(state: tauri::State<'_, Mutex<AppState>>) -> Result<String, Error> {
     // Return content string
     Ok(content)
 }
+
+#[tauri::command]
+pub fn new_file(state: tauri::State<Mutex<AppState>>) {
+    // Clear the state
+    let mut state = state.lock().unwrap();
+    state.file_name = String::default();
+    state.file_path = std::path::PathBuf::default();
+}
