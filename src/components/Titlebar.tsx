@@ -92,7 +92,9 @@ export default function Titlebar(props: TitlebarProps) {
                     }
                 </div>
             </div>
-            <div className="w-full text-white text-center" onMouseDown={handleDrag}>{fileName}</div>
+            <div className="flex justify-center items-center w-full text-white text-center" onMouseDown={handleDrag}>
+                <p>{fileName}</p>
+            </div>
             <div className="flex">
                 <button 
                     id="titlebar-minimize" 
