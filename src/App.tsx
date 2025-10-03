@@ -5,18 +5,21 @@ import Titlebar from "./components/Titlebar";
 
 function App() {
   const [content, setContent] = useState("");
+  const [fileName, setFileName] = useState<string>("");
 
   const saveAs = () => {
     invoke("save_as", {content: content})
   }
 
-  const open = () => {
-    invoke("open")
-      .then((text) => {
-        setContent(text as string);
-        console.log(text);
-      })
-      .catch((error) => console.error(error))
+  const open = async () => {
+    try {
+      await invoke("open");
+      const name = await invoke("get_file_name");
+      setFileName(name as string);
+    }
+    catch (err) {
+      console.error(err);
+    }
   }
 
   const save = async () => {
@@ -31,7 +34,7 @@ function App() {
   return (
     <>
       <main className="bg-gray-800 flex flex-col">
-        <Titlebar open={open} save={save} saveAs={saveAs}/>
+        <Titlebar fileName={fileName} open={open} save={save} saveAs={saveAs}/>
         <TextBox content={content} setContent={setContent}/>
       </main>
     </>
