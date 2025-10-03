@@ -3,7 +3,7 @@ use tauri::Manager;
 
 mod commands;
 
-// File path state
+// App State
 #[derive(Default)]
 pub struct AppState {
     file_path: std::path::PathBuf,
@@ -18,7 +18,13 @@ pub fn run() {
             app.manage(Mutex::new(AppState::default()));
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![commands::save_as, commands::open])
+        .invoke_handler(tauri::generate_handler![
+            commands::get_file_name,
+            commands::save, 
+            commands::save_as, 
+            commands::open,
+            commands::new_file
+            ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
