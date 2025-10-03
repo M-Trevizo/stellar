@@ -40,6 +40,12 @@ fn set_state(state: tauri::State<Mutex<AppState>>, path: &std::path::PathBuf) {
 }
 
 #[tauri::command]
+pub fn get_file_name(state: tauri::State<Mutex<AppState>>) -> String {
+    let state = state.lock().unwrap();
+    state.file_name.to_owned()
+}
+
+#[tauri::command]
 pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), Error> {
     // Open File Explorer and get PathBuf
     let mut path_buf = FileDialog::new()
