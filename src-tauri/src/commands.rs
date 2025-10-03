@@ -65,7 +65,7 @@ pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) -> Result<
 pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), Error> {
     let state = state.lock().unwrap();
     let path_buf = state.file_path.to_owned();
-    let file = File::open(path_buf)?;
+    let file = File::create(path_buf)?;
     let mut buf_writer = BufWriter::new(file);
     buf_writer.write(content.as_bytes())?;
     Ok(())
