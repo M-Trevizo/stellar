@@ -1,13 +1,14 @@
 import type { TitleMenuProps } from "./Titlebar";
 
 type FileMenuProps = TitleMenuProps & {
+    newFile: () => void,
     open: () => void,
     saveAs: () => void,
     save: () => void
 }
 
 export default function FileMenu(props: FileMenuProps) {
-    const { closeMenus, open, saveAs, save } = props;
+    const { closeMenus, newFile, open, saveAs, save } = props;
     const fileMenuArr: string[] = [
         "New",
         "Open",
@@ -19,6 +20,8 @@ export default function FileMenu(props: FileMenuProps) {
     const handleClick = (option: number) => {
         console.log(`File option selected: ${fileMenuArr[option]}`)
         switch(fileMenuArr[option]) {
+            case "New": newFile();
+            break;
             case "Open": open();
             break;
             case "Save As...": saveAs();

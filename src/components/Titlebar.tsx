@@ -11,19 +11,17 @@ export type TitleMenuProps = {
 
 type TitlebarProps = {
     fileName: string,
+    newFile: () => void,
     open: () => void,
     saveAs: () => void,
     save: () => void
 }
 
 export default function Titlebar(props: TitlebarProps) {
-    const { fileName, open, saveAs, save } =  props;
+    const { fileName, newFile, open, saveAs, save } =  props;
     const appWindow = getCurrentWindow();
     const [showFile, setShowFile] = useState<boolean>(false);
     const [showEdit, setShowEdit] = useState<boolean>(false);
-    
-
-    
 
     const handleDrag = (e: MouseEvent) => {
         if (e.buttons === 1) {
@@ -70,6 +68,7 @@ export default function Titlebar(props: TitlebarProps) {
                         showFile && 
                         <FileMenu 
                             closeMenus={closeMenus} 
+                            newFile={newFile}
                             open={open}
                             saveAs={saveAs}
                             save={save}
