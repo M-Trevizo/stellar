@@ -7,7 +7,7 @@ type FileMenuProps = TitleMenuProps & {
 }
 
 export default function FileMenu(props: FileMenuProps) {
-    const { closeMenus, saveAs, open } = props;
+    const { closeMenus, open, saveAs, save } = props;
     const fileMenuArr: string[] = [
         "New",
         "Open",
@@ -23,7 +23,7 @@ export default function FileMenu(props: FileMenuProps) {
             break;
             case "Save As...": saveAs();
             break;
-            case "Save": saveAs();
+            case "Save": save();
         }   
     }
     
