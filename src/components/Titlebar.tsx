@@ -10,22 +10,29 @@ export type TitleMenuProps = {
 }
 
 type TitlebarProps = {
+    fileName: string,
     open: () => void,
     saveAs: () => void,
     save: () => void
 }
 
 export default function Titlebar(props: TitlebarProps) {
-    const { open, saveAs, save } =  props;
+    const { fileName, open, saveAs, save } =  props;
     const appWindow = getCurrentWindow();
     const [showFile, setShowFile] = useState<boolean>(false);
     const [showEdit, setShowEdit] = useState<boolean>(false);
+    
+
+    
 
     const handleDrag = (e: MouseEvent) => {
         if (e.buttons === 1) {
-            e.detail === 2
-                ? appWindow.toggleMaximize()
-                : appWindow.startDragging();
+            if (e.detail === 2) {
+                appWindow.toggleMaximize();
+            }
+            else {
+                appWindow.startDragging();
+            }
         }
     }
 
@@ -85,7 +92,7 @@ export default function Titlebar(props: TitlebarProps) {
                     }
                 </div>
             </div>
-            <div className="w-full" onMouseDown={handleDrag}></div>
+            <div className="w-full text-white text-center" onMouseDown={handleDrag}>{fileName}</div>
             <div className="flex">
                 <button 
                     id="titlebar-minimize" 
