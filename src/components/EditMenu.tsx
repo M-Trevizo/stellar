@@ -1,11 +1,11 @@
 import type { TitleMenuProps } from "./Titlebar";
 
 type EditMenuProps = TitleMenuProps & {
-    cut: () => void,
+    copy: () => void
 }
 
 export default function EditMenu(props: EditMenuProps) {
-    const { closeMenus } = props;
+    const { closeMenus, copy } = props;
     const editMenuArr: string[] = [
         "Cut",
         "Copy",
@@ -13,11 +13,13 @@ export default function EditMenu(props: EditMenuProps) {
         "Delete"
     ]
 
+    
+
     // Handle calls for edit menu commands
     const handleClick = (option: number) => {
         console.log(`Edit option selected: ${editMenuArr[option]}`);
         switch(editMenuArr[option]) {
-            case "Copy": ;
+            case "Copy": copy()
         }
     }
     

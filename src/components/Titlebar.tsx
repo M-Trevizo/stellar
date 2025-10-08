@@ -14,11 +14,12 @@ type TitlebarProps = {
     newFile: () => void,
     open: () => void,
     saveAs: () => void,
-    save: () => void
+    save: () => void,
+    copy: () => void,
 }
 
 export default function Titlebar(props: TitlebarProps) {
-    const { fileName, newFile, open, saveAs, save } =  props;
+    const { fileName, newFile, open, saveAs, save, copy } =  props;
     const appWindow = getCurrentWindow();
     const [showFile, setShowFile] = useState<boolean>(false);
     const [showEdit, setShowEdit] = useState<boolean>(false);
@@ -86,7 +87,7 @@ export default function Titlebar(props: TitlebarProps) {
                         showEdit && 
                         <EditMenu 
                             closeMenus={closeMenus} 
-                            cut={() => console.log("This should cut things")}
+                            copy={copy}
                         />
                     }
                 </div>

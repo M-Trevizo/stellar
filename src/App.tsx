@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, SyntheticEvent } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import TextBox from "./components/TextBox";
 import Titlebar from "./components/Titlebar";
@@ -6,7 +6,10 @@ import Titlebar from "./components/Titlebar";
 function App() {
   const [content, setContent] = useState("");
   const [fileName, setFileName] = useState<string>("");
+  const [selection, setSelection] = useState<string>("");
+    
 
+  // File menu function
   const saveAs = async () => {
     try {
       await invoke("save_as", {content: content})
@@ -46,6 +49,18 @@ function App() {
     setFileName("");
   }
 
+  // Edit Menu function
+  const handleSelect = (e: SyntheticEvent) => {
+    const target = e.target as HTMLTextAreaElement;
+    const text = target.value.substring(target.selectionStart, target.selectionEnd);
+    setSelection(text);
+  }
+
+  const copy = () => {
+        navigator.clipboard.writeText(selection);
+    }
+
+
   return (
     <>
       <main className="bg-gray-800 flex flex-col">
@@ -55,8 +70,13 @@ function App() {
           save={save} 
           saveAs={saveAs}
           newFile={newFile}
+          copy={copy}
         />
-        <TextBox content={content} setContent={setContent}/>
+        <TextBox 
+          content={content} 
+          setContent={setContent}
+          handleSelect={handleSelect}
+        />
       </main>
     </>
   );
