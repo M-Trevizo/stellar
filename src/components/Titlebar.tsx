@@ -56,11 +56,11 @@ export default function Titlebar(props: TitlebarProps) {
     
 
     return (
-        <div className="h-[30px] bg-gray-900 absolute min-w-screen flex flex-row justify-between">
-            <div className="flex justify-center items-center gap-0 text-white">
+        <div className="h-[30px] bg-eerie-900 absolute min-w-screen flex flex-row justify-between">
+            <div className="flex justify-center items-center gap-0 text-latte">
                 <div className="h-full relative">
                     <button 
-                        className="px-4 h-full hover:cursor-pointer hover:bg-gray-700"
+                        className="px-4 h-full hover:cursor-pointer hover:bg-eerie-700"
                         onClick={() => handleClick("file")}
                     >
                         File
@@ -78,7 +78,7 @@ export default function Titlebar(props: TitlebarProps) {
                 </div>
                 <div className="h-full relative">
                     <button 
-                        className="px-4 h-full hover:cursor-pointer hover:bg-gray-700"
+                        className="px-4 h-full hover:cursor-pointer hover:bg-eerie-700"
                         onClick={() => handleClick("edit")}
                     >
                         Edit
@@ -92,14 +92,14 @@ export default function Titlebar(props: TitlebarProps) {
                     }
                 </div>
             </div>
-            <div className="flex justify-center items-center w-full text-white text-center" onMouseDown={handleDrag}>
+            <div className="flex justify-center items-center w-full text-latte text-center" onMouseDown={handleDrag}>
                 <p>{fileName}</p>
             </div>
             <div className="flex">
                 <button 
                     id="titlebar-minimize" 
                     title="minimize" 
-                    className="p-0 m-0 w-[30px] border-none flex flex-row justify-center items-center hover:bg-gray-700"
+                    className="p-0 m-0 w-[30px] border-none flex flex-row justify-center items-center hover:bg-eerie-700"
                     onClick={() => appWindow.minimize()}
                 >
                  {/* https://api.iconify.design/mdi:window-minimize.svg */}
@@ -109,13 +109,13 @@ export default function Titlebar(props: TitlebarProps) {
                     height="24"
                     viewBox="0 0 24 24"
                 >
-                    <path fill="white" d="M19 13H5v-2h14z" />
+                    <path fill="#f7f3e3" d="M19 13H5v-2h14z" />
                 </svg>
                 </button>
                 <button 
                     id="titlebar-maximize" 
                     title="maximize" 
-                    className="p-0 m-0 w-[30px] border-none flex flex-row justify-center items-center hover:bg-gray-700"
+                    className="p-0 m-0 w-[30px] border-none flex flex-row justify-center items-center hover:bg-eerie-700"
                     onClick={() => appWindow.toggleMaximize()}
                 >
                 {/* https://api.iconify.design/mdi:window-maximize.svg */}
@@ -124,8 +124,9 @@ export default function Titlebar(props: TitlebarProps) {
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
+                    className="text-red-600"
                 >
-                    <path fill="white" d="M4 4h16v16H4zm2 4v10h12V8z" />
+                    <path fill="#f7f3e3" d="M4 4h16v16H4zm2 4v10h12V8z" />
                 </svg>
                 </button>
                 <button 
@@ -142,7 +143,7 @@ export default function Titlebar(props: TitlebarProps) {
                     viewBox="0 0 24 24"
                 >
                     <path
-                    fill="white"
+                    fill="#f7f3e3"
                     d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"
                     />
                 </svg>

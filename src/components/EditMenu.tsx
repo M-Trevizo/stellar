@@ -25,11 +25,11 @@ export default function EditMenu(props: EditMenuProps) {
     
     return (
         <menu 
-            className="bg-gray-600 drop-shadow-sm drop-shadow-black flex flex-col absolute top-[30px] w-30" 
+            className="bg-eerie-700 drop-shadow-sm drop-shadow-black flex flex-col absolute top-[30px] w-30" 
             onMouseLeave={closeMenus}
         >
             {
-                editMenuArr.map((item, idx) => <li key={idx} onClick={() => handleClick(idx)} className="pl-2 py-1 hover:bg-gray-500">{item}</li>
+                editMenuArr.map((item, idx) => <li key={idx} onClick={() => handleClick(idx)} className="pl-2 py-1 hover:bg-eerie-600">{item}</li>
                 )
             }
         </menu>

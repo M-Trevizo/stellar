@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+    --color-eerie-900: #0f0f0f;
+    --color-eerie-800: #262626;
+    --color-eerie-700: #4c4c4c;
+    --color-eerie-600: #757575;
+    --color-latte: #f7f3e3;
+}

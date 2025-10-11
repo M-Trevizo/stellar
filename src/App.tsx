@@ -63,7 +63,7 @@ function App() {
 
   return (
     <>
-      <main className="bg-gray-800 flex flex-col">
+      <main className="bg-eerie-800 flex flex-col">
         <Titlebar 
           fileName={fileName} 
           open={open} 
