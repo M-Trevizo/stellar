@@ -13,7 +13,7 @@ export default function TextBox(props: TextBoxProps) {
         <textarea
             rows={10} 
             cols={10}
-            className="text-latte p-2 pt-8 outline-0 resize-none border-white  min-h-screen"
+            className="text-latte font-roboto font-normal p-2 pt-8 outline-0 resize-none border-white  min-h-screen"
             onChange={e => setContent(e.target.value)}
             value={content}
             onSelect={handleSelect}

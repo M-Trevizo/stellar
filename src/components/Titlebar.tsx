@@ -57,7 +57,7 @@ export default function Titlebar(props: TitlebarProps) {
 
     return (
         <div className="h-[30px] bg-eerie-900 absolute min-w-screen flex flex-row justify-between">
-            <div className="flex justify-center items-center gap-0 text-latte">
+            <div className="font-nunito flex justify-center items-center gap-0 text-latte">
                 <div className="h-full relative">
                     <button 
                         className="px-4 h-full hover:cursor-pointer hover:bg-eerie-700"
