@@ -36,6 +36,10 @@ function App() {
   const save = async () => {
     try {
       await invoke("save", {content: content});
+      if (fileName.length === 0) {
+        const name = await invoke("get_file_name");
+        setFileName(name as string);
+      }
     }
     catch (err) {
       console.error(err);
