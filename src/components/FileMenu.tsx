@@ -37,7 +37,7 @@ export default function FileMenu(props: FileMenuProps) {
             onMouseLeave={closeMenus}
         >
             {
-                fileMenuArr.map((item, idx) => <li key={idx} onClick={() => handleClick(idx)} className="pl-2 py-1 hover:bg-eerie-600">{item}</li>)
+                fileMenuArr.map((item, idx) => <li key={idx} onClick={() => handleClick(idx)} className="cursor-default pl-2 py-1 hover:bg-eerie-600">{item}</li>)
             }
         </menu>
     );

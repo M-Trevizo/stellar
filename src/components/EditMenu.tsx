@@ -30,7 +30,7 @@ export default function EditMenu(props: EditMenuProps) {
             onMouseLeave={closeMenus}
         >
             {
-                editMenuArr.map((item, idx) => <li key={idx} onClick={() => handleClick(idx)} className="pl-2 py-1 hover:bg-eerie-600">{item}</li>
+                editMenuArr.map((item, idx) => <li key={idx} onClick={() => handleClick(idx)} className="cursor-default pl-2 py-1 hover:bg-eerie-600">{item}</li>
                 )
             }
         </menu>
