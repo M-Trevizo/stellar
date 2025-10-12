@@ -63,11 +63,22 @@ pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) -> Result<
 
 #[tauri::command]
 pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), Error> {
-    let state = state.lock().unwrap();
-    let path_buf = state.file_path.to_owned().ok_or(Error::NotFound)?;
-    let file = File::create(path_buf)?;
-    let mut buf_writer = BufWriter::new(file);
-    buf_writer.write(content.as_bytes())?;
+    // Drop state lock so we can pass to save_as later on
+    let path_buf = {
+        let state_guard = state.lock().unwrap();
+        state_guard.file_path.to_owned()
+    };
+    // If file path is none call save_as instead
+    // Else use the normal save logic
+    if path_buf.is_none() {
+        save_as(state, content)?;
+    }
+    else {
+        let path_buf = path_buf.unwrap();
+        let file = File::create(path_buf)?;
+        let mut buf_writer = BufWriter::new(file);
+        buf_writer.write(content.as_bytes())?;
+    }
     Ok(())
 }
 
