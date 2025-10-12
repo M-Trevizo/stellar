@@ -18,6 +18,7 @@ export default function EditMenu(props: EditMenuProps) {
     // Handle calls for edit menu commands
     const handleClick = (option: number) => {
         console.log(`Edit option selected: ${editMenuArr[option]}`);
+        closeMenus();
         switch(editMenuArr[option]) {
             case "Copy": copy()
         }

@@ -19,6 +19,7 @@ export default function FileMenu(props: FileMenuProps) {
     // Handle calls for the file menu
     const handleClick = (option: number) => {
         console.log(`File option selected: ${fileMenuArr[option]}`)
+        closeMenus();
         switch(fileMenuArr[option]) {
             case "New": newFile();
             break;
