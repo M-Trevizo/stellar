@@ -31,7 +31,7 @@ impl serde::Serialize for Error {
 
 fn set_state(state: tauri::State<Mutex<AppState>>, path: &std::path::PathBuf) {
     let mut state = state.lock().unwrap();
-    state.file_path = path.to_owned();
+    state.file_path = Some(path.to_owned());
     state.file_name = path
         .file_name()
         .and_then(|os_str| os_str.to_str())
@@ -64,7 +64,7 @@ pub fn save_as(state: tauri::State<Mutex<AppState>>, content: String) -> Result<
 #[tauri::command]
 pub fn save(state: tauri::State<Mutex<AppState>>, content: String) -> Result<(), Error> {
     let state = state.lock().unwrap();
-    let path_buf = state.file_path.to_owned();
+    let path_buf = state.file_path.to_owned().ok_or(Error::NotFound)?;
     let file = File::create(path_buf)?;
     let mut buf_writer = BufWriter::new(file);
     buf_writer.write(content.as_bytes())?;
@@ -96,5 +96,5 @@ pub fn new_file(state: tauri::State<Mutex<AppState>>) {
     // Clear the state
     let mut state = state.lock().unwrap();
     state.file_name = String::default();
-    state.file_path = std::path::PathBuf::default();
+    state.file_path = Some(std::path::PathBuf::default());
 }

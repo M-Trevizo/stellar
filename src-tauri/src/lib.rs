@@ -6,7 +6,7 @@ mod commands;
 // App State
 #[derive(Default)]
 pub struct AppState {
-    file_path: std::path::PathBuf,
+    file_path: Option<std::path::PathBuf>,
     file_name: String
 }
 
