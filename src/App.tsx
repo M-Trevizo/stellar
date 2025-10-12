@@ -7,7 +7,6 @@ function App() {
   const [content, setContent] = useState("");
   const [fileName, setFileName] = useState<string>("");
   const [selection, setSelection] = useState<string>("");
-    
 
   // File menu function
   const saveAs = async () => {
@@ -56,9 +55,24 @@ function App() {
     setSelection(text);
   }
 
+  const getCaretPosition = () => {
+    const textArea = document.getElementById("text-area") as HTMLTextAreaElement;
+    const caretStart = textArea.selectionStart;
+    return caretStart;
+  }
+
   const copy = () => {
-        navigator.clipboard.writeText(selection);
-    }
+    navigator.clipboard.writeText(selection);
+  }
+
+  const paste = async () => {
+    const caretPosition = getCaretPosition();
+    const pasteText = await navigator.clipboard.readText();
+    const contentLeft = content.substring(0, caretPosition);
+    const contentRight = content.substring(caretPosition);
+    const newContent = contentLeft + pasteText + contentRight;
+    setContent(newContent);
+  }
 
 
   return (
@@ -71,6 +85,7 @@ function App() {
           saveAs={saveAs}
           newFile={newFile}
           copy={copy}
+          paste={paste}
         />
         <TextBox 
           content={content} 
