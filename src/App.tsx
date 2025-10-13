@@ -3,10 +3,20 @@ import { invoke } from "@tauri-apps/api/core";
 import TextBox from "./components/TextBox";
 import Titlebar from "./components/Titlebar";
 
+type Selection = {
+  text: string,
+  start: number,
+  end: number
+}
+
 function App() {
   const [content, setContent] = useState("");
   const [fileName, setFileName] = useState<string>("");
-  const [selection, setSelection] = useState<string>("");
+  const [selection, setSelection] = useState<Selection>({
+    text: "",
+    start: -1,
+    end: -1,
+  });
 
   // File menu function
   const saveAs = async () => {
@@ -56,7 +66,11 @@ function App() {
   const handleSelect = (e: SyntheticEvent) => {
     const target = e.target as HTMLTextAreaElement;
     const text = target.value.substring(target.selectionStart, target.selectionEnd);
-    setSelection(text);
+    setSelection({
+      text: text, 
+      start: target.selectionStart,
+      end: target.selectionEnd
+    });
   }
 
   const getCaretPosition = () => {
@@ -65,8 +79,17 @@ function App() {
     return caretStart;
   }
 
+  const cut = () => {
+    copy();
+    // Delete what was selected
+    const contentLeft = content.substring(0, selection.start);
+    const contentRight = content.substring(selection.end);
+    const newContent = contentLeft + contentRight;
+    setContent(newContent);
+  }
+
   const copy = () => {
-    navigator.clipboard.writeText(selection);
+    navigator.clipboard.writeText(selection.text);
   }
 
   const paste = async () => {
@@ -88,6 +111,7 @@ function App() {
           save={save} 
           saveAs={saveAs}
           newFile={newFile}
+          cut={cut}
           copy={copy}
           paste={paste}
         />
