@@ -4,10 +4,11 @@ type EditMenuProps = TitleMenuProps & {
     cut: () => void,
     copy: () => void,
     paste: () => void,
+    deleteOpt: () => void,
 }
 
 export default function EditMenu(props: EditMenuProps) {
-    const { closeMenus, cut, copy, paste } = props;
+    const { closeMenus, cut, copy, paste, deleteOpt } = props;
     const editMenuArr: string[] = [
         "Cut",
         "Copy",
@@ -28,6 +29,7 @@ export default function EditMenu(props: EditMenuProps) {
             break;
             case "Paste": paste();
             break;
+            case "Delete": deleteOpt();
         }
     }
     

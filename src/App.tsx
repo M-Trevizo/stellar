@@ -81,11 +81,7 @@ function App() {
 
   const cut = () => {
     copy();
-    // Delete what was selected
-    const contentLeft = content.substring(0, selection.start);
-    const contentRight = content.substring(selection.end);
-    const newContent = contentLeft + contentRight;
-    setContent(newContent);
+    deleteOpt();
   }
 
   const copy = () => {
@@ -98,6 +94,13 @@ function App() {
     const contentLeft = content.substring(0, caretPosition);
     const contentRight = content.substring(caretPosition);
     const newContent = contentLeft + pasteText + contentRight;
+    setContent(newContent);
+  }
+
+  const deleteOpt = () => {
+    const contentLeft = content.substring(0, selection.start);
+    const contentRight = content.substring(selection.end);
+    const newContent = contentLeft + contentRight;
     setContent(newContent);
   }
 
@@ -114,6 +117,7 @@ function App() {
           cut={cut}
           copy={copy}
           paste={paste}
+          deleteOpt={deleteOpt}
         />
         <TextBox 
           content={content} 

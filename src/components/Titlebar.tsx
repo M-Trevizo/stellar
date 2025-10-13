@@ -18,10 +18,21 @@ type TitlebarProps = {
     cut: () => void,
     copy: () => void,
     paste: () => void,
+    deleteOpt: () => void,
 }
 
 export default function Titlebar(props: TitlebarProps) {
-    const { fileName, newFile, open, saveAs, save, cut, copy, paste } =  props;
+    const { 
+        fileName, 
+        newFile, 
+        open, 
+        saveAs, 
+        save, 
+        cut, 
+        copy, 
+        paste, 
+        deleteOpt 
+    } =  props;
     const appWindow = getCurrentWindow();
     const [showFile, setShowFile] = useState<boolean>(false);
     const [showEdit, setShowEdit] = useState<boolean>(false);
@@ -92,6 +103,7 @@ export default function Titlebar(props: TitlebarProps) {
                             cut={cut}
                             copy={copy}
                             paste={paste}
+                            deleteOpt={deleteOpt}
                         />
                     }
                 </div>
