@@ -134,16 +134,7 @@ export default function Titlebar(props: TitlebarProps) {
                     className="p-0 m-0 w-[30px] border-none flex flex-row justify-center items-center hover:bg-eerie-700"
                     onClick={() => appWindow.toggleMaximize()}
                 >
-                {/* https://api.iconify.design/mdi:window-maximize.svg */}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    className="text-red-600"
-                >
-                    <path fill="#f7f3e3" d="M4 4h16v16H4zm2 4v10h12V8z" />
-                </svg>
+                    <img src="src/assets/square.svg" />
                 </button>
                 <button 
                     id="titlebar-close" 
