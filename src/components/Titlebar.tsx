@@ -3,6 +3,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MouseEvent, useState } from "react";
 import FileMenu from "./FileMenu";
 import EditMenu from "./EditMenu";
+import maxIcon from "../assets/square.svg";
 
 // Props for the title bar menus
 export type TitleMenuProps = {
@@ -134,7 +135,7 @@ export default function Titlebar(props: TitlebarProps) {
                     className="p-0 m-0 w-[30px] border-none flex flex-row justify-center items-center hover:bg-eerie-700"
                     onClick={() => appWindow.toggleMaximize()}
                 >
-                    <img src="src/assets/square.svg" />
+                    <img src={maxIcon} />
                 </button>
                 <button 
                     id="titlebar-close" 
